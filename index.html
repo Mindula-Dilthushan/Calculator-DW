@@ -1,1 +1,149 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f7f6;
+            margin: 0;
+        }
+        .calculator-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 5px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        .results {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed #eee;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-card">
+    <h2>Discount Calculator</h2>
+    
+    <!-- Amount Input -->
+    <div class="form-group">
+        <label for="amount">මුදල (Amount):</label>
+        <input type="number" id="amount" placeholder="0.00" oninput="calculateDiscount()">
+    </div>
+    
+    <!-- Percentage Selection -->
+    <div class="form-group">
+        <label>වට්ටම් ප්‍රතිශතය (Discount %):</label>
+        <div class="radio-group">
+            <label><input type="radio" name="discountPercentage" value="15" checked onclick="calculateDiscount()"> 15%</label>
+            <label><input type="radio" name="discountPercentage" value="20" onclick="calculateDiscount()"> 20%</label>
+        </div>
+    </div>
+    
+    <!-- Output Results -->
+    <div class="results">
+        <div class="result-item">
+            <span>වට්ටම (Discount Amount):</span>
+            <span id="discountAmount">0.00</span>
+        </div>
+        <div class="result-item total">
+            <span>මුළු එකතුව (Total Price):</span>
+            <span id="totalAmount">0.00</span>
+        </div>
+    </div>
+</div>
+
+<script>
+function calculateDiscount() {
+    // Get the input amount
+    const amount = parseFloat(document.getElementById('amount').value);
+    
+    // Get the selected discount percentage
+    const percentages = document.getElementsByName('discountPercentage');
+    let selectedPercentage = 15; // default
+    
+    for (const r of percentages) {
+        if (r.checked) {
+            selectedPercentage = parseFloat(r.value);
+            break;
+        }
+    }
+    
+    // Elements to display results
+    const discountAmountEl = document.getElementById('discountAmount');
+    const totalAmountEl = document.getElementById('totalAmount');
+    
+    // Check if input is a valid number
+    if (isNaN(amount) || amount <= 0) {
+        discountAmountEl.innerText = "0.00";
+        totalAmountEl.innerText = "0.00";
+        return;
+    }
+    
+    // Calculations
+    const discount = (amount * selectedPercentage) / 100;
+    const total = amount - discount;
+    
+    // Display values formatted to 2 decimal places
+    discountAmountEl.innerText = discount.toFixed(2);
+    totalAmountEl.innerText = total.toFixed(2);
+}
+</script>
+
+</body>
+</html>
 
